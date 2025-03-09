@@ -1,12 +1,27 @@
+const LABEL_PREFIX = "prune";
+
+const DAY = "d";
+const MONTH = "m";
+const YEAR = "y";
+
+const LABEL_REGEX = new RegExp(
+  `^${LABEL_PREFIX}-(\\d+)(${[DAY, MONTH, YEAR].join("|")})$`
+);
+
+type AutoDeleteLabel = {
+  duration: number;
+  durationType: string;
+};
+
 function main() {
-  for (const label of GmailApp.getUserLabels()) {
-    const duration = parseDurationFromLabel(label.getName());
+  for (const gmailLabel of GmailApp.getUserLabels()) {
+    const autoDeleteLabel = parseLabel(gmailLabel.getName());
     // Ignore labels that are irrelevant to this script.
-    if (!duration) {
+    if (!autoDeleteLabel) {
       continue;
     }
-    const deletionDate = getDeletionDateFromDuration(duration);
-    for (const thread of label.getThreads()) {
+    const deletionDate = getDeletionDate(autoDeleteLabel);
+    for (const thread of gmailLabel.getThreads()) {
       if (thread.getLastMessageDate() < deletionDate) {
         thread.moveToTrash();
       }
@@ -14,28 +29,28 @@ function main() {
   }
 }
 
-function parseDurationFromLabel(labelName) {
-  const match = /^prune-(\d+)(d|m|y)$/.exec(labelName);
+function parseLabel(labelName: string): AutoDeleteLabel | null {
+  const match = LABEL_REGEX.exec(labelName);
   if (!match) {
     return null;
   }
   return {
-    durationQuantity: parseInt(match[1], 10),
+    duration: parseInt(match[1], 10),
     durationType: match[2],
   };
 }
 
-function getDeletionDateFromDuration({ durationQuantity, durationType }) {
+function getDeletionDate({ duration, durationType }: AutoDeleteLabel): Date {
   const now = new Date();
   switch (durationType) {
-    case "d":
-      now.setDate(now.getDate() - durationQuantity);
+    case DAY:
+      now.setDate(now.getDate() - duration);
       break;
-    case "m":
-      now.setMonth(now.getMonth() - durationQuantity);
+    case MONTH:
+      now.setMonth(now.getMonth() - duration);
       break;
-    case "y":
-      now.setFullYear(now.getFullYear() - durationQuantity);
+    case YEAR:
+      now.setFullYear(now.getFullYear() - duration);
       break;
   }
   return now;
