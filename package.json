@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "tsc --noImplicitUseStrict Code.ts && sed -i '1s/^/const exports = {};\\n/' Code.js",
+    "build": "tsc --noImplicitUseStrict --outDir . src/Code.ts && sed -i '1s/^/const exports = {};\\n/' Code.js",
     "deploy": "clasp push",
     "test": "jest"
   },
