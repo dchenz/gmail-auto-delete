@@ -41,8 +41,12 @@ export function parseLabel(labelName: string): AutoDeleteLabel | null {
   if (!match) {
     return null;
   }
+  const duration = parseInt(match[1], 10);
+  if (duration <= 0) {
+    return null;
+  }
   return {
-    duration: parseInt(match[1], 10),
+    duration,
     durationType: match[2],
   };
 }

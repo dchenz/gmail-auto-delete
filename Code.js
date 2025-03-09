@@ -33,8 +33,12 @@ function parseLabel(labelName) {
     if (!match) {
         return null;
     }
+    var duration = parseInt(match[1], 10);
+    if (duration <= 0) {
+        return null;
+    }
     return {
-        duration: parseInt(match[1], 10),
+        duration: duration,
         durationType: match[2]
     };
 }

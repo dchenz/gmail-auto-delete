@@ -32,6 +32,7 @@ describe("Label regex matching", () => {
     { labelName: "prune-1a", expectedResult: null },
     { labelName: "prune-1", expectedResult: null },
     { labelName: "prune-", expectedResult: null },
+    { labelName: "prune-0d", expectedResult: null },
   ];
 
   for (const { labelName, expectedResult } of cases) {
