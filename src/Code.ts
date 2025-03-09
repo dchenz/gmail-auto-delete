@@ -21,11 +21,18 @@ function main() {
       continue;
     }
     const deletionDate = getDeletionDate(autoDeleteLabel);
+    let totalThreads = 0;
+    let deletedThreads = 0;
     for (const thread of gmailLabel.getThreads()) {
       if (thread.getLastMessageDate() < deletionDate) {
         thread.moveToTrash();
+        deletedThreads++;
       }
+      totalThreads++;
     }
+    Logger.log(
+      `Label ${gmailLabel.getName()} - ${deletedThreads} deleted, ${totalThreads} total`
+    );
   }
 }
 

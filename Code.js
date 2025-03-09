@@ -15,12 +15,17 @@ function main() {
             continue;
         }
         var deletionDate = getDeletionDate(autoDeleteLabel);
+        var totalThreads = 0;
+        var deletedThreads = 0;
         for (var _b = 0, _c = gmailLabel.getThreads(); _b < _c.length; _b++) {
             var thread = _c[_b];
             if (thread.getLastMessageDate() < deletionDate) {
                 thread.moveToTrash();
+                deletedThreads++;
             }
+            totalThreads++;
         }
+        Logger.log("Label ".concat(gmailLabel.getName(), " - ").concat(deletedThreads, " deleted, ").concat(totalThreads, " total"));
     }
 }
 function parseLabel(labelName) {
