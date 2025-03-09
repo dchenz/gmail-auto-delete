@@ -1,5 +1,7 @@
 {
   "scripts": {
+    "build": "tsc --noImplicitUseStrict Code.ts && sed -i '1s/^/const exports = {};\\n/' Code.js",
+    "deploy": "clasp push",
     "test": "jest"
   },
   "jest": {
@@ -7,7 +9,7 @@
   },
   "devDependencies": {
     "@google/clasp": "^2.5.0",
-    "@types/google-apps-script": "^1.0.97",
+    "@types/google-apps-script": "1.0.54",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.10",
     "jest": "^29.7.0",
