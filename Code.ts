@@ -29,7 +29,7 @@ function main() {
   }
 }
 
-function parseLabel(labelName: string): AutoDeleteLabel | null {
+export function parseLabel(labelName: string): AutoDeleteLabel | null {
   const match = LABEL_REGEX.exec(labelName);
   if (!match) {
     return null;
@@ -40,7 +40,10 @@ function parseLabel(labelName: string): AutoDeleteLabel | null {
   };
 }
 
-function getDeletionDate({ duration, durationType }: AutoDeleteLabel): Date {
+export function getDeletionDate({
+  duration,
+  durationType,
+}: AutoDeleteLabel): Date {
   const now = new Date();
   switch (durationType) {
     case DAY:
