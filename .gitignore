@@ -1,0 +1,12 @@
+*.DS_Store
+*.log
+.env
+.nyc_output
+
+build
+coverage
+node_modules
+tmp
+
+.clasprc.json
+.clasp.json
