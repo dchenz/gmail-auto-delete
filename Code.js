@@ -15,7 +15,7 @@ function main() {
 }
 
 function parseDurationFromLabel(labelName) {
-  const match = /^prune-(\d+)(d|w|m)$/.exec(labelName);
+  const match = /^prune-(\d+)(d|m|y)$/.exec(labelName);
   if (!match) {
     return null;
   }
@@ -31,10 +31,10 @@ function getDeletionDateFromDuration({ durationQuantity, durationType }) {
     case "d":
       now.setDate(now.getDate() - durationQuantity);
       break;
-    case "w":
+    case "m":
       now.setMonth(now.getMonth() - durationQuantity);
       break;
-    case "m":
+    case "y":
       now.setFullYear(now.getFullYear() - durationQuantity);
       break;
   }
