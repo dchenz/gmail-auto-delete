@@ -1,7 +1,7 @@
 {
   "license": "MIT",
   "scripts": {
-    "build": "tsc --noImplicitUseStrict --outDir . src/Code.ts && sed -i '1s/^/const exports = {};\\n/' Code.js",
+    "build": "./build.sh",
     "deploy": "clasp push",
     "test": "jest"
   },
